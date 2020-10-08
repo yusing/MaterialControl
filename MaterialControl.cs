@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace MaterialControls
+namespace MaterialControl
 {
     public static class MaterialColor
     {

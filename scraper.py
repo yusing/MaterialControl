@@ -3,12 +3,12 @@ import sys
 import clr
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) +'/bin/Release')
 clr.AddReference("System.Windows.Forms")
-clr.AddReference("MaterialControls")
+clr.AddReference("MaterialControl")
 import _thread as thread
 from newsapi import NewsApiClient
 from typing import Text, TextIO, overload
 import System.Windows.Forms as WinForms
-from MaterialControls import *
+from MaterialControl import *
 from System import String, DateTime, Object, EventHandler
 from System.Collections import *
 from System.Collections.Generic import List
