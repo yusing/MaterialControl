@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Text;
 
 namespace MaterialControl
 {
@@ -21,6 +22,13 @@ namespace MaterialControl
         public static readonly SolidBrush COLOR_PRIMARY_VARIANT_BRUSH = new SolidBrush(COLOR_PRIMARY_VARIANT);
         public static readonly SolidBrush COLOR_DARK_PRIMARY_BRUSH = new SolidBrush(COLOR_DARK_PRIMARY);
         public static readonly SolidBrush COLOR_HIGHLIGHT_BRUSH = new SolidBrush(COLOR_HIGHLIGHT);
+    }
+
+    public static class MaterialFont
+    {
+        private static readonly PrivateFontCollection fontCollection = new PrivateFontCollection();
+        public static readonly Font FONT_UI_REGULAR = new Font(FontFamily.GenericSansSerif, 11);
+        public static readonly Font FONT_UI_BOLD = new Font(FONT_UI_REGULAR, FontStyle.Bold);
     }
     public class HSpacer : UserControl
     {
@@ -71,6 +79,7 @@ namespace MaterialControl
         {
             if (!(text is null))
                 this.Text = text;
+            this.Font = MaterialFont.FONT_UI_REGULAR;
             this.ClientSize = new Size(80, 25);
             this.BorderColor = MaterialColor.COLOR_ON_SURFACE;
             _AnimationTimer.Tick += (sender, e) =>
@@ -121,19 +130,45 @@ namespace MaterialControl
     {
         public MaterialTextBox()
         {
+            this.Font = MaterialFont.FONT_UI_REGULAR;
+            this.BackColor = MaterialColor.COLOR_HIGHLIGHT;
+            this.ForeColor = MaterialColor.COLOR_SURFACE;
             this.BorderStyle = BorderStyle.None;
-        }
-
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            Console.WriteLine("TextBox OnPaintBackground");
-            ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle, MaterialColor.COLOR_HIGHLIGHT, ButtonBorderStyle.Solid);
-            base.OnPaintBackground(e);
+            this.MinimumSize = new Size(this.Width, 20);
         }
     }
-    public class MaterialTextField : GroupBox
+    public class MaterialLabel : Label
     {
-        public Label Label;
+        public MaterialLabel()
+        {
+            this.Font = MaterialFont.FONT_UI_BOLD;
+            this.BackColor = MaterialColor.COLOR_SURFACE;
+            this.ForeColor = MaterialColor.COLOR_ON_SURFACE;
+        }
+    }
+    public class MaterialPanel : UserControl
+    {
+        public string LabelText;
+        public MaterialPanel()
+        {
+            this.Font = MaterialFont.FONT_UI_BOLD;
+            this.BackColor = MaterialColor.COLOR_SURFACE;
+            this.ForeColor = MaterialColor.COLOR_ON_SURFACE;
+            this.Height = 60;
+        }
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            e.Graphics.Clear(this.BackColor);
+            e.Graphics.DrawString(this.LabelText, this.Font, MaterialColor.COLOR_ON_SURFACE_BRUSH, this.ClientRectangle, new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Near,
+            });
+            ControlPaint.DrawBorder(e.Graphics, this.Bounds, this.BackColor, ButtonBorderStyle.Solid);
+        }
+    }
+    public class MaterialTextField : MaterialPanel
+    {
         public MaterialTextBox TextBox;
         public new string Text
         {
@@ -142,21 +177,11 @@ namespace MaterialControl
         }
         public MaterialTextField(string labelText)
         {
-            this.FlatStyle = FlatStyle.Flat;
-            this.Label = new Label
-            {
-                Text = labelText,
-                AutoSize = true,
-                Dock = DockStyle.Top,
-            };
+            this.LabelText = labelText;
             this.TextBox = new MaterialTextBox
             {
                 Dock = DockStyle.Bottom,
-                BackColor = MaterialColor.COLOR_DARK_PRIMARY,
-                ForeColor = MaterialColor.COLOR_HIGHLIGHT
             };
-            this.Height = this.TextBox.Height * 3;
-            this.Controls.Add(this.Label);
             this.Controls.Add(this.TextBox);
         }
     }
@@ -169,6 +194,7 @@ namespace MaterialControl
         }
         public MaterialDateTimePicker()
         {
+            this.Font = MaterialFont.FONT_UI_BOLD;
             this.BackColor = MaterialColor.COLOR_DARK_PRIMARY;
             this.CalendarMonthBackground = MaterialColor.COLOR_DARK_PRIMARY;
             this.CalendarForeColor = MaterialColor.COLOR_HIGHLIGHT;
@@ -183,12 +209,11 @@ namespace MaterialControl
         {
             Console.WriteLine("DateTimePicker OnPaintBackground");
             pevent.Graphics.Clear(this.BackColor);
-            base.OnPaintBackground(pevent);
+            // base.OnPaintBackground(pevent);
         }
     }
-    public class MaterialDateTimePickerField : GroupBox
+    public class MaterialDateTimePickerField : MaterialPanel
     {
-        public Label Label;
         public MaterialDateTimePicker Picker = new MaterialDateTimePicker();
         public new string Text
         {
@@ -196,15 +221,7 @@ namespace MaterialControl
         }
         public MaterialDateTimePickerField(string labelText)
         {
-            this.FlatStyle = FlatStyle.Flat;
-            this.Label = new Label
-            {
-                Text = labelText,
-                AutoSize = true,
-                Dock = DockStyle.Top
-            };
-            this.Height = this.Picker.Height * 3;
-            this.Controls.Add(this.Label);
+            this.LabelText = labelText;
             this.Controls.Add(this.Picker);
         }
     }

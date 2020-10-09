@@ -1,0 +1,12 @@
+*
+!.gitignore
+!Properties/
+!*.cs
+!*.csproj
+!*.sln
+!*.py
+!UITest/
+!UITest/Properties/
+!UITest/*.cs
+!UITest/*.csproj
+!UITest/*.config
