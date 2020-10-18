@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static MaterialControl.MaterialUtils;
 
 namespace UITest
 {
@@ -15,25 +16,16 @@ namespace UITest
     {
         public UI()
         {
-            var layout = new List<Control>()
-            {
-                new MaterialTextField("Query"), 
-                new MaterialTextField("Source"), 
-                new MaterialTextField("Category"),
-                new MaterialDateTimePickerField("From"),
-                new MaterialTextField("Language"), 
-                new MaterialTextField("Sort by"), 
-                new MaterialDateTimePickerField("To"),
-                new HSpacer(),
-                new MaterialTextField("Dummy"),
-                new MaterialButton("Search"),
-            };
             InitializeComponent();
             this.form.BeginUpdate();
-            foreach(var control in layout)
-            {
-                this.form.Controls.Add(control);
-            }
+            this.form.Controls.Add(Field<MaterialTextBox>("Source"));
+            this.form.Controls.Add(Field<MaterialTextBox>("Category"));
+            this.form.Controls.Add(Field<MaterialDateTimeInput>("From"));
+            this.form.Controls.Add(Field<MaterialTextBox>("Language"));
+            this.form.Controls.Add(Field<MaterialTextBox>("Sort by"));
+            this.form.Controls.Add(Field<MaterialDateTimeInput>("To"));
+            this.form.Controls.Add(HSpacer());
+            this.form.Controls.Add(new MaterialControl.MaterialButton("Search"));
             this.form.EndUpdate();
         }
     }

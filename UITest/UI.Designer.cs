@@ -1,4 +1,6 @@
-﻿namespace UITest
+﻿using System.Windows.Forms;
+
+namespace UITest
 {
     partial class UI
     {
@@ -33,9 +35,10 @@
             // 
             // form
             // 
-            this.form.Location = new System.Drawing.Point(13, 13);
+            this.form.Dock = System.Windows.Forms.DockStyle.Top;
+            this.form.Location = new System.Drawing.Point(0, 0);
             this.form.Name = "form";
-            this.form.Size = new System.Drawing.Size(775, 285);
+            this.form.Size = new System.Drawing.Size(800, 285);
             this.form.TabIndex = 0;
             // 
             // UI
@@ -45,8 +48,9 @@
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.form);
+            this.DoubleBuffered = true;
             this.Name = "UI";
-            this.Text = "Form1";
+            this.Text = "UI Test";
             this.ResumeLayout(false);
 
         }

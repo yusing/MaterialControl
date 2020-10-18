@@ -15,7 +15,8 @@ namespace UITest
         static void Main()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            Application.VisualStyleState = System.Windows.Forms.VisualStyles.VisualStyleState.NonClientAreaEnabled;
+            Application.SetCompatibleTextRenderingDefault(true);
             Application.Run(new UI());
         }
     }
